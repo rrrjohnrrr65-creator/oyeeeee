@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My MOU 💗</title>
+    
+    <!-- Handwriting Font & Cute Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #fce4ec; /* Soft Pink Background */
+            font-family: 'Patrick Hand', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- THE NOTEBOOK CONTAINER --- */
+        .book-container {
+            position: relative;
+            width: 350px;
+            height: 550px;
+            perspective: 1500px;
+            cursor: pointer;
+        }
+
+        /* --- BOOK COVER --- */
+        .cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 10px 20px 20px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transform-origin: left;
+            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 2;
+            padding: 20px;
+            border-left: 15px solid #ff6b81; /* Book Spine */
+        }
+
+        .cover img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .cover h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px white;
+        }
+
+        .click-hint {
+            margin-top: 30px;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: #ff6b81;
+            font-weight: bold;
+            animation: bounce 1.5s infinite;
+        }
+
+        /* --- INSIDE PAGES (The Notebook Paper) --- */
+        .pages {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 98%;
+            height: 96%;
+            background: #fff9f0; /* Paper color */
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1;
+            padding: 20px 10px 20px 40px; /* Left padding for margin line */
+            overflow-y: auto; /* Allow scrolling if text is long */
+            opacity: 0;
+            transition: opacity 0.5s ease 0.5s;
+            
+            /* Notebook Lines Effect */
+            background-image: 
+                linear-gradient(#999 1px, transparent 1px), /* Horizontal lines */
+                linear-gradient(90deg, #ff6b81 1px, transparent 1px); /* Vertical margin line */
+            background-size: 100% 1.5rem, 30px 100%;
+            background-position: 0 1.5rem, 0 0;
+            line-height: 1.5rem;
+        }
+
+        .pages p {
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.1rem;
+            color: #2c3e50; /* Ink color */
+            margin-bottom: 1.5rem;
+            margin-top: 2px;
+        }
+
+        .highlight {
+            color: #e91e63;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        /* --- OPEN STATE ANIMATION --- */
+        .book-container.open .cover {
+            transform: rotateY(-140deg);
+        }
+
+        .book-container.open .pages {
+            opacity: 1;
+            z-index: 5; /* Bring pages to front */
+        }
+
+        /* --- CUTE DECORATIONS (CATS & HEARTS) --- */
+        .sticker {
+            position: absolute;
+            width: 80px;
+            pointer-events: none;
+            z-index: 10;
+            display: none; /* Hidden initially */
+        }
+
+        .cat1 { bottom: -20px; right: -30px; width: 100px; animation: float 3s infinite; }
+        .cat2 { top: -40px; left: -20px; width: 90px; transform: rotate(-10deg); }
+        .heart-rain {
+            position: fixed;
+            top: -10vh;
+            font-size: 20px;
+            animation: fall linear forwards;
+            z-index: 0;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO PLAYER (Song: Popipo or Cute BGM) -->
+    <!-- Replace src="song.mp3" if you have the file, otherwise this link works -->
+    <audio id="bg-music" loop>
+        <source src="https://www.myinstants.com/media/sounds/popipo-popipo.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- FLOATING BACKGROUND HEARTS CONTAINER -->
+    <div id="hearts-container"></div>
+
+    <div class="book-container" onclick="openBook()">
+        
+        <!-- FRONT COVER -->
+        <div class="cover">
+            <!-- Ensure your photo is named 'mou.jpg' and in the same folder -->
+            <img src="mou.jpg" alt="MOU Photo" onerror="this.src='https://i.pinimg.com/736x/8f/1c/a4/8f1ca463e2710bb877963d76b1f28b4d.jpg'"> 
+            
+            <h1>✨ 1 Year Together ✨<br>💗 MOU 💗</h1>
+            <p style="color:white; margin-top:5px;">25th Dec Special</p>
+            
+            <div class="click-hint">Tap to Open Notebook 📖</div>
+        </div>
+
+        <!-- INSIDE PAGES -->
+        <div class="pages">
+            <!-- CAT STICKERS -->
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExajFqOXBsYzJ5bzh5bzh5bzh5bzh5bzh5bzh5bzh5/MDJ5bzh5bzh5bzh5/giphy.gif" class="sticker cat2" alt="Cute Cat">
+
+            <p class="highlight">✨ 1 Year Together MOU ✨</p>
+            
+            <p>
+                Aaj ka din mere liye bohot special hai ❤️ aaj hi ke din hum pehli baar mile the online Instagram pe. Tumne pehli baar mujhse acche se baat ki thi aur sachme uss ek message ne meri zindagi ka flow hi badal diya 🥹.
+            </p>
+            
+            <p>
+                Main khud ko bohot lucky maanta hu ki tum mujhe mili 🍀. Tum sirf meri life ka hissa nhi ho, tum meri life ki <span class="highlight">blessing</span> ho ✨👸.
+            </p>
+            
+            <p>
+                Main words mein express nhi kar pata ki tum mere liye kya ho... tum meri <b style="color:#d63384">bestest friend</b> ho ❤️🌸, meri strength ho 💫, mera comfort ho 🌙, mera everything ho 🫶.
+            </p>
+            
+            <p>
+                Iss ek saal mein humne bohot kuch dekha, acha v mushkil v, pr phir v hum yahan tak aaye. Aur bas yahi main hamesha chahta hu—tumhare saath rehna har situation mein.
+            </p>
+            
+            <p>
+                Chahe duniya badal jaye pr main nhi badlunga. Main aaj v wahi hu aur hamesha tumhare saath rehna chahta hoon 💞.
+            </p>
+            
+            <p style="text-align:center; margin-top:30px;">
+                <span class="highlight">🌸 Happy 1 Year to us 🌸</span><br>
+                Aur hn thank you for existing in my life 💖.
+            </p>
+
+            <br><br>
+            <!-- Cute Cat Animation at Bottom -->
+            <div style="text-align:center;">
+                <img src="https://media.giphy.com/media/geoUa9vzIm72b84FjT/giphy.gif" width="120" alt="Dancing Cat">
+            </div>
+        </div>
+
+        <!-- Floating Sticker outside -->
+        <img src="https://media.giphy.com/media/QvBoMEcQ7DQXK/giphy.gif" class="sticker cat1" id="floatCat" alt="Floating Cat">
+
+    </div>
+
+    <script>
+        function openBook() {
+            const book = document.querySelector('.book-container');
+            const music = document.getElementById('bg-music');
+            const stickers = document.querySelectorAll('.sticker');
+            
+            // 1. Toggle Book Open
+            if (!book.classList.contains('open')) {
+                book.classList.add('open');
+                
+                // 2. Play Music
+                music.volume = 0.6;
+                music.play().catch(e => console.log("Interaction needed for audio"));
+
+                // 3. Show Stickers
+                stickers.forEach(s => s.style.display = 'block');
+
+                // 4. Start Heart Rain
+                setInterval(createHeart, 300);
+            }
+        }
+
+        // Heart Animation Function
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-rain');
+            heart.innerHTML = '💗';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            
+            document.getElementById('hearts-container').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
